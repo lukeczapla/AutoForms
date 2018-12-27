@@ -211,7 +211,7 @@ public class FormPanel<T> extends JPanel implements ActionListener {
                 return new JCheckBox("", false);
             }
             default: {
-                if (f.field.getType().isAnnotationPresent(Item.class)) {
+                if (f.field.getType().isAnnotationPresent(Item.class) && !f.field.getType().isEnum()) {
                     FormPanel<?> fp;
                     try {
                         fp = new FormPanel(f.field.getType().getName(), false);
@@ -220,7 +220,7 @@ public class FormPanel<T> extends JPanel implements ActionListener {
                     }
                     return fp;
                 }
-                if (f.field.getType().isEnum()) {
+                if (f.field.getType().isAnnotationPresent(Item.class) && f.field.getType().isEnum()) {
                     Class x = f.field.getType();
                     return new JComboBox<Object>(f.field.getType().getEnumConstants());
 //                    JComboBox<f.field>
@@ -382,3 +382,5 @@ class Dummy {
         this.name = name;
     }
 }
+
+
